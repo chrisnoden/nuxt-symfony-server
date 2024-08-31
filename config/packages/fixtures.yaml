@@ -1,0 +1,10 @@
+when@dev:
+    services:
+        App\DataFixtures\:
+            resource: '../../src/DataFixtures'
+            tags: ['doctrine.fixture.orm']
+when@test:
+    services:
+        App\DataFixtures\:
+            resource: '../../src/DataFixtures'
+            tags: ['doctrine.fixture.orm']

@@ -1,0 +1,15 @@
+{% extends 'email/base.html.twig' %}
+
+{% block body %}
+    <h1>{{ siteName }}</h1>
+
+    <p>A new user login has been created for you. You must first activate your account.</p>
+
+    <p>Click the link below to activate your account and set your password</p>
+
+    <a href="{{ frontend }}/security/activation?token={{ token }}">{{ frontend }}/security/activation?token={{ token }}</a>
+
+    <p>This link will expire in 4 hours.</p>
+
+    <p>If you do not know why you have received this email please contact us!</p>
+{% endblock %}

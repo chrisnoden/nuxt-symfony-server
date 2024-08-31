@@ -1,0 +1,49 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+parameters:
+    route.requirements.id: '[0-9]+'
+    route.requirements.slug: '[a-z\-\_0-9]+'
+    route.requirements.uuid: '([a-fA-F0-9]{8}-(?:[a-fA-F0-9]{4}-){3}[a-fA-F0-9]{12}){1}'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    api_authentication_success_handler: '@App\Security\AuthenticationSuccessHandler'
+    api_2fa_required_handler: '@App\Security\TwoFactorAuthenticationRequiredHandler'
+    api_2fa_authentication_success_handler: '@App\Security\TwoFactorAuthenticationSuccessHandler'
+    api_2fa_failure_handler: '@App\Security\TwoFactorAuthenticationFailureHandler'
+
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    App\MessageHandler\:
+        resource: '../src/MessageHandler'
+
+    App\Repository\:
+        resource: '../src/Repository'
+
+    App\Security\:
+        resource: '../src/Security'
+
+    App\Security\EventListeners\:
+        resource: '../src/Security/EventListeners'
+
+    App\Service\:
+        resource: '../src/Service'
+
+    App\Service\MailerService:
+        arguments:
+            $fromAddressEmail: '%env(string:MAILER_FROM_ADDRESS_EMAIL)%'
+            $fromAddressName: '%env(string:MAILER_FROM_ADDRESS_NAME)%'
+            $frontEndHostname: '%env(string:FRONT_END_HOSTNAME)%'
+            $siteName: '%env(string:SITE_NAME)%'
+
+    App\Transformer\:
+        resource: '../src/Transformer'

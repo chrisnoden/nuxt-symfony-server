@@ -1,0 +1,24 @@
+# config/packages/rate_limiter.yaml
+framework:
+    rate_limiter:
+        api:
+            policy: 'token_bucket'
+            limit: 5000
+            rate: { interval: '15 minutes', amount: 500 }
+        security:
+            policy: 'sliding_window'
+            limit: 180
+            interval: '1 minute'
+
+when@dev:
+    framework:
+        rate_limiter:
+            api:
+                policy: 'sliding_window'
+                limit: 200
+                interval: '1 minute'
+            security:
+                policy: 'sliding_window'
+                limit: 60
+                interval: '1 minute'
+

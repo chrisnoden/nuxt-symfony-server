@@ -1,0 +1,21 @@
+services:
+    nss-db:
+        image: postgres:16-alpine
+        environment:
+            POSTGRES_DB: defaultdb
+            POSTGRES_USER: nssdb
+            POSTGRES_PASSWORD: secret
+        volumes:
+            - nssdb:/var/lib/postgresql/data
+        ports:
+            - "54317:5432"
+        networks:
+            - backend
+
+networks:
+    backend:
+        driver: bridge
+        name: nss_backend
+
+volumes:
+    nssdb:

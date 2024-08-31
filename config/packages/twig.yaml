@@ -1,0 +1,19 @@
+twig:
+    file_name_pattern: '*.twig'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\Twig\Extension\:
+        resource: '../../src/Twig/Extension'
+        tags: ['twig.extension']
+
+    App\Twig\Runtime\:
+        resource: '../../src/Twig/Runtime'
+        tags: ['twig.runtime']
+
+when@test:
+    twig:
+        strict_variables: true

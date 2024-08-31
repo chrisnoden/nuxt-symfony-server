@@ -1,0 +1,9 @@
+_security_logout:
+    resource: security.route_loader.logout
+    type: service
+
+security_user_login:
+    path: /security/login
+
+2fa_login_check:
+    path: /security/2fa/check

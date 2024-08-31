@@ -1,0 +1,13 @@
+{% extends 'email/base.html.twig' %}
+
+{% block body %}
+    <h1>{{ siteName }}</h1>
+
+    <p>To confirm your email address, please click the link below:</p>
+
+    <a href="{{ frontend }}/security/confirm-email?token={{ token }}">{{ frontend }}/security/confirm-email?token={{ token }}</a>
+
+    <p>This link will expire in 4 hours.</p>
+
+    <p>If you do not know why you receiving this email, please contact us immediately.</p>
+{% endblock %}

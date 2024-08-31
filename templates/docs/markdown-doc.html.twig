@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.6.1/github-markdown-light.min.css">
+{% endblock %}
+
+{% block title %}Documentation{% endblock %}
+
+{% block body %}
+    <div style="margin: auto; display: flex; flex-direction: row; gap: 1rem;">
+        <div>
+            {% for idx, collection in files %}
+                <h3>{{ collection.name }}</h3>
+                <ul style="list-style: none; padding: 0;">
+                    {% for file in collection.files %}
+                        <li style="font-size: 14px; color: #404040;">
+                            <a href="/docs/{{ file.relativePathname }}">
+                                {{ file.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </div>
+
+        <div class="markdown-body" style="max-width: 980px; flex: 1 1 0%;">
+            {{ markdown_markup(content) }}
+        </div>
+    </div>
+{% endblock %}
