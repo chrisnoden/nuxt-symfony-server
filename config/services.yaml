@@ -23,6 +23,9 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    App\EventListeners\:
+        resource: '../src/EventListeners'
+
     App\MessageHandler\:
         resource: '../src/MessageHandler'
 
