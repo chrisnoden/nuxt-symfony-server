@@ -10,9 +10,9 @@ class ClientTransformer extends TransformerAbstract
     public function transform(Client $entity): array
     {
         return [
-            'id'               => $entity->getId(),
-            'name'             => $entity->getCompanyName(),
-            'enabled'          => $entity->isEnabled(),
+            'id'          => $entity->getId(),
+            'companyName' => $entity->getCompanyName(),
+            'enabled'     => $entity->isEnabled(),
         ];
     }
 }

@@ -114,7 +114,6 @@ class UserController extends AbstractController
         methods: ['PUT']
     )]
     public function create(
-        ClientRepository $clientRepository,
         UserSetDataFormRequest $request,
         UserService $userService,
         #[CurrentUser] User $sessionUser,

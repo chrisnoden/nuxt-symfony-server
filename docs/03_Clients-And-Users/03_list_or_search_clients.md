@@ -25,7 +25,7 @@ A successful response:
   "data": [
     {
       "id": 1,
-      "name": "Test Client",
+      "companyName": "Test Client",
       "enabled": true
     }
   ],

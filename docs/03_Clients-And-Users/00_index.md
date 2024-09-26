@@ -20,7 +20,7 @@ document.
 ### Clients
 
 3. [List or Search Clients](./03_list_or_search_clients.md)
-
+4. [Create or Update Client](./04_create_or_update_client.md)
 
 ### Users
 

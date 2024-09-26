@@ -6,6 +6,8 @@ use App\Entity\Client;
 use App\Repository\Behaviours\Paginatable;
 use App\Repository\Behaviours\WildcardSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Doctrine\Persistence\ManagerRegistry;
 use IlluminateAgnostic\Str\Support\Str;
 use Pagerfanta\Pagerfanta;
@@ -18,6 +20,43 @@ class ClientRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Client::class);
+    }
+
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function save(Client $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function remove(Client $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+        if ($flush) {
+            $this->_em->flush();
+        }
+    }
+
+    public function findOneByNameCaseInsensitive(string $companyName): ?Client
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb->andWhere('
+                ILIKE(c.companyName, :search) = true 
+            ')
+            ->setParameter('search', $companyName)
+            ->setMaxResults(1)
+        ;
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     public function search(array $criteria = [], array $orderBy = [], int $page = 1, int $perPage = 100): Pagerfanta
