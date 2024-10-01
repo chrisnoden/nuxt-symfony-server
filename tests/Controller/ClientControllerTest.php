@@ -43,7 +43,7 @@ class ClientControllerTest extends WebTestCase
         $this->assertGreaterThanOrEqual(2, count($data));
         foreach ($data as $clientData) {
             $this->assertArrayHasKey('id', $clientData);
-            $this->assertArrayHasKey('name', $clientData);
+            $this->assertArrayHasKey('companyName', $clientData);
             $this->assertArrayHasKey('enabled', $clientData);
             $this->assertTrue($clientData['enabled']);
         }

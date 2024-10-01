@@ -1,4 +1,4 @@
-INSERT INTO "client" ("id", "company_name", "enabled", "created_at", "updated_at") VALUES
+INSERT INTO "clients" ("id", "company_name", "enabled", "created_at", "updated_at") VALUES
     (1, 'Test Company', 't', NOW(), NOW()),
     (2, 'Another Company', 't', NOW(), NOW())
 ;
@@ -10,4 +10,4 @@ INSERT INTO "users" ("id", "client_id", "name", "email", "roles", "password", "e
     ('01915aef-1c8c-7518-b2a1-45539bfc378b', 2,'John Does', 'john.does@example.com', '["ROLE_USER_ADMINISTRATION"]', '$2y$13$26MSu1Ry8G1dcl8ElRtrHOpNxNe9BJ/4JpJp5mBEUnpanUu/VZPKy', 't', 'disabled', NULL, NOW(), NOW())
 ;
 
-SELECT setval('client_id_seq', 3, false);
+SELECT setval('clients_id_seq', 3, false);

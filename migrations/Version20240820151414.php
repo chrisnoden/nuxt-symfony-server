@@ -16,10 +16,10 @@ final class Version20240820151414 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $this->addSql('CREATE SEQUENCE client_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE SEQUENCE clients_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE user_reset_password_requests_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
 
-        $this->addSql('CREATE TABLE client (id INT NOT NULL, company_name VARCHAR(100) NOT NULL, enabled BOOLEAN NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE clients (id INT NOT NULL, company_name VARCHAR(100) NOT NULL, enabled BOOLEAN NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
 
         $this->addSql('CREATE TABLE user_confirm_email_requests (id UUID NOT NULL, user_id UUID NOT NULL, email VARCHAR(255) NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, expires_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_6F6FEE27E7927C74 ON user_confirm_email_requests (email)');
@@ -40,17 +40,17 @@ final class Version20240820151414 extends AbstractMigration
 
         $this->addSql('ALTER TABLE user_confirm_email_requests ADD CONSTRAINT FK_6F6FEE27A76ED395 FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE user_reset_password_requests ADD CONSTRAINT FK_AFB5C210A76ED395 FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('ALTER TABLE users ADD CONSTRAINT FK_1483A5E919EB6921 FOREIGN KEY (client_id) REFERENCES client (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE users ADD CONSTRAINT FK_1483A5E919EB6921 FOREIGN KEY (client_id) REFERENCES clients (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
 
     public function down(Schema $schema): void
     {
-        $this->addSql('DROP SEQUENCE client_id_seq CASCADE');
+        $this->addSql('DROP SEQUENCE clients_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE user_reset_password_requests_id_seq CASCADE');
         $this->addSql('ALTER TABLE user_confirm_email_requests DROP CONSTRAINT FK_6F6FEE27A76ED395');
         $this->addSql('ALTER TABLE user_reset_password_requests DROP CONSTRAINT FK_AFB5C210A76ED395');
         $this->addSql('ALTER TABLE users DROP CONSTRAINT FK_1483A5E919EB6921');
-        $this->addSql('DROP TABLE client');
+        $this->addSql('DROP TABLE clients');
         $this->addSql('DROP TABLE user_confirm_email_requests');
         $this->addSql('DROP TABLE user_reset_password_requests');
         $this->addSql('DROP TABLE users');

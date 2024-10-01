@@ -40,7 +40,7 @@ class UserControllerTest extends WebTestCase
         $data = json_decode($response->getContent(), true)['data'];
 
         $this->assertNotEmpty($data);
-        $this->assertCount(2, $data);
+        $this->assertCount(32, $data);
         foreach ($data as $clientData) {
             $this->assertArrayHasKey('id', $clientData);
             $this->assertArrayHasKey('client', $clientData);
@@ -85,7 +85,7 @@ class UserControllerTest extends WebTestCase
         $data = json_decode($response->getContent(), true)['data'];
 
         $this->assertNotEmpty($data);
-        $this->assertCount(2, $data);
+        $this->assertCount(32, $data);
         foreach ($data as $clientData) {
             $this->assertArrayHasKey('id', $clientData);
             $this->assertArrayHasKey('client', $clientData);
@@ -127,7 +127,7 @@ class UserControllerTest extends WebTestCase
         $data = json_decode($response->getContent(), true)['data'];
 
         $this->assertNotEmpty($data);
-        $this->assertCount(3, $data);
+        $this->assertCount(33, $data);
         foreach ($data as $clientData) {
             $this->assertArrayHasKey('id', $clientData);
             $this->assertArrayHasKey('client', $clientData);
@@ -170,7 +170,7 @@ class UserControllerTest extends WebTestCase
         $data = json_decode($response->getContent(), true)['data'];
 
         $this->assertNotEmpty($data);
-        $this->assertCount(2, $data);
+        $this->assertCount(32, $data);
         foreach ($data as $clientData) {
             $this->assertArrayHasKey('id', $clientData);
             $this->assertArrayHasKey('client', $clientData);
