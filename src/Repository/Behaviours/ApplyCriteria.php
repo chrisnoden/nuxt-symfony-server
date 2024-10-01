@@ -40,16 +40,16 @@ trait ApplyCriteria
 
     protected function applyOrderBy(QueryBuilder $qb, string $alias, array $orderBy = [], array $joinedSorts = []): QueryBuilder
     {
-        $classMeta = $this->getEntityManager()->getClassMetadata($this->_entityName);
+        $classMeta = $this->getEntityManager()->getClassMetadata($this->getClassName());
 
         if (!empty($orderBy)) {
             foreach ($orderBy as $fieldName => $order) {
                 if (in_array($fieldName, $classMeta->fieldNames)) {
-                    $qb->addOrderBy($alias . '.' . $fieldName, $order);
+                    $qb->addOrderBy('lower('.$alias . '.' . $fieldName.')', $order);
                 } elseif (in_array(Str::camel($fieldName), $classMeta->fieldNames)) {
-                    $qb->addOrderBy($alias . '.' . Str::camel($fieldName), $order);
+                    $qb->addOrderBy('lower('.$alias . '.' . Str::camel($fieldName).')', $order);
                 } elseif (isset($joinedSorts[$fieldName])) {
-                    $qb->addOrderBy($joinedSorts[$fieldName], $order);
+                    $qb->addOrderBy('lower('.$joinedSorts[$fieldName].')', $order);
                 }
             }
         }

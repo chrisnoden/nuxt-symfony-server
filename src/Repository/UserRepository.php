@@ -70,7 +70,13 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     public function search(Client $client, array $criteria = [], array $orderBy = [], int $page = 1, int $perPage = 100): Pagerfanta
     {
-        $qb = $this->createQueryBuilder('u');
+        $qb = $this->createQueryBuilder('u')
+            ->leftJoin('u.client', 'c')
+        ;
+
+        $joinedSorts = [
+            'client_companyName' => 'c.companyName',
+        ];
 
         if ($client->getId() > 1) {
             $qb
@@ -94,7 +100,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         if (array_key_exists('name', $criteria) && !empty($criteria['name'])) {
             // this might be a slow search
             $qb->andWhere('ILIKE(u.name, :name) = true ')
-                ->setParameter('name',  $this->wildcard(strtolower($criteria['name'])));
+                ->setParameter('name', $this->wildcard(strtolower($criteria['name'])))
+            ;
 
             unset($criteria['name']);
         }
@@ -102,13 +109,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         if (array_key_exists('email', $criteria) && !empty($criteria['email'])) {
             // this might be a slow search
             $qb->andWhere('ILIKE(u.email, :email) = true ')
-                ->setParameter('email',  $this->wildcard(strtolower($criteria['email'])));
+                ->setParameter('email', $this->wildcard(strtolower($criteria['email'])))
+            ;
 
             unset($criteria['email']);
         }
 
         if (array_key_exists('role', $criteria) && !empty($criteria['role'])) {
-            $qb->andWhere('JSONB_CONTAINS(u.roles, \'["'.strtoupper($criteria['role']).'"]\') = true');
+            $qb->andWhere('JSONB_CONTAINS(u.roles, \'["' . strtoupper($criteria['role']) . '"]\') = true');
 
             unset($criteria['role']);
         }
@@ -118,13 +126,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         if (empty($orderBy)) {
             $qb->orderBy('lower(u.name)', 'asc');
         } else {
-            foreach ($orderBy as $field => $order) {
-                if ($field === 'name') {
-                    $qb->addOrderBy('lower(u.name)', $order);
-                } else {
-                    $qb->addOrderBy('u.' . Str::camel($field), $order);
-                }
-            }
+            $qb = $this->applyOrderBy($qb, 'u', $orderBy, $joinedSorts);
         }
 
         return $this->paginate($qb, $page, $perPage);
@@ -146,6 +148,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     public function loadUserByIdentifier(string $identifier): ?UserInterface
     {
-        return $this->findOneBy(['email' =>  Str::lower($identifier)]);
+        return $this->findOneBy(['email' => Str::lower($identifier)]);
     }
 }
