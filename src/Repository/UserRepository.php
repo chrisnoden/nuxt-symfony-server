@@ -97,6 +97,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             unset($criteria['enabled']);
         }
 
+        if (array_key_exists('q', $criteria) && !empty($criteria['q'])) {
+            // this might be a slow search
+            $qb->andWhere('
+                ILIKE(u.name, :search) = true 
+                OR ILIKE(u.email, :search) = true
+            ')
+                ->setParameter('search', '%' . $this->spacesToWildcard($criteria['q']) . '%')
+            ;
+            unset($criteria['q']);
+            unset($criteria['name']);
+            unset($criteria['email']);
+        }
+
         if (array_key_exists('name', $criteria) && !empty($criteria['name'])) {
             // this might be a slow search
             $qb->andWhere('ILIKE(u.name, :name) = true ')
@@ -122,12 +135,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         }
 
         $qb = $this->applyCriteria($qb, $criteria);
-
-        if (empty($orderBy)) {
-            $qb->orderBy('lower(u.name)', 'asc');
-        } else {
-            $qb = $this->applyOrderBy($qb, 'u', $orderBy, $joinedSorts);
-        }
+        $qb = $this->applyOrderBy($qb, 'u', $orderBy, $joinedSorts);
 
         return $this->paginate($qb, $page, $perPage);
     }

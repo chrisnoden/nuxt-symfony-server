@@ -25,6 +25,7 @@ class UserSearchFormRequest extends SearchFormRequest
             'enabled' => 'boolean',
             'name'    => 'string|min:3|max:100',
             'role'    => 'string|max:40',
+            'q'       => 'string|min:3|max:50', // quick search
         ]);
     }
 }
