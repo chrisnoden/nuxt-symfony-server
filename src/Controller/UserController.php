@@ -8,7 +8,6 @@ use App\Controller\Behaviours\RequestCriteria;
 use App\Entity\User;
 use App\FormRequest\UserSearchFormRequest;
 use App\FormRequest\UserSetDataFormRequest;
-use App\Repository\ClientRepository;
 use App\Repository\UserRepository;
 use App\Service\UserService;
 use App\Transformer\UserTransformer;

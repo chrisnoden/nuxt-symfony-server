@@ -8,7 +8,6 @@ use App\Entity\User;
 use App\FormRequest\SessionUserDataFormRequest;
 use App\Service\SessionUserService;
 use App\Transformer\UserTransformer;
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Somnambulist\Bundles\ApiBundle\Response\Types\ObjectType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;

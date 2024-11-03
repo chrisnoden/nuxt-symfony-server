@@ -31,7 +31,7 @@ class UserControllerTest extends WebTestCase
                 'CONTENT_TYPE' => 'application/json',
             ],
         );
-        /** @var Response $response */
+
         $response = $client->getResponse();
 
         $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
@@ -76,7 +76,7 @@ class UserControllerTest extends WebTestCase
                 'CONTENT_TYPE' => 'application/json',
             ],
         );
-        /** @var Response $response */
+
         $response = $client->getResponse();
 
         $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
@@ -118,7 +118,7 @@ class UserControllerTest extends WebTestCase
                 'CONTENT_TYPE' => 'application/json',
             ],
         );
-        /** @var Response $response */
+
         $response = $client->getResponse();
 
         $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
@@ -161,7 +161,7 @@ class UserControllerTest extends WebTestCase
                 'CONTENT_TYPE' => 'application/json',
             ],
         );
-        /** @var Response $response */
+
         $response = $client->getResponse();
 
         $this->assertSame(Response::HTTP_OK, $response->getStatusCode());

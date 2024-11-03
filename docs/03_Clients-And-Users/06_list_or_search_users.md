@@ -15,6 +15,7 @@ to client **1** they will only be able to search users within their own client.
 | email     | string  | no       | wildcard, case-insensitive search<br/>_eg `example` will search all email addresses for the string |
 | enabled   | boolean | no       | filter by users that are specifically enabled or disabled                                          |
 | name      | string  | no       | wildcard, case-insensitive search of the name field                                                |
+| q         | string  | no       | wildcard quick search, searching both name and email address                                       |
 | role      | string  | no       | search for users that have this role                                                               |
 
 
@@ -97,7 +98,7 @@ Returns a `HTTP 401 Unauthorized` status
 #### HTTP 403 Forbidden
 
 The User must have the `ROLE_USER_ADMINISTRATION` role or they will receive
-this response.
+this 403 error response.
 
 ## Example
 
