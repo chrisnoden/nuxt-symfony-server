@@ -106,8 +106,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 ->setParameter('search', '%' . $this->spacesToWildcard($criteria['q']) . '%')
             ;
             unset($criteria['q']);
-            unset($criteria['name']);
-            unset($criteria['email']);
         }
 
         if (array_key_exists('name', $criteria) && !empty($criteria['name'])) {
