@@ -22,11 +22,7 @@ class UserTransformer extends TransformerAbstract
             'roles'            => $entity->getRoles(),
             'active'           => null !== $entity->getPassword(),
             'enabled'          => $entity->isEnabled(),
-            'twoFactorEnabled' => (
-                $entity->getTwoFactorStatus() !== TwoFactorStatusType::DISABLED
-                &&
-                $entity->getTwoFactorStatus() !== TwoFactorStatusType::PENDING
-            ),
+            'twoFactorEnabled' => $entity->isTwoFactorEnabled(),
             'twoFactorMethod' => $entity->getTwoFactorStatus()->value,
         ];
     }
