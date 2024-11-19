@@ -13,4 +13,5 @@ enum TwoFactorStatusType: string
     case DISABLED = 'disabled';
     case PENDING = 'pending';
     case GOOGLE_AUTHENTICATOR = 'google-authenticator';
+    case MAGIC_LINK = 'magic-link';
 }

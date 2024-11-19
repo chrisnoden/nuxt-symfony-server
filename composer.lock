@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "569ca7b4169ca47717e99bf2f9d077f3",
+    "content-hash": "301eb8e399a0d8c911b58507ca8ead94",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1605,21 +1605,21 @@
         },
         {
             "name": "endroid/qr-code",
-            "version": "6.0.3",
+            "version": "5.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/endroid/qr-code.git",
-                "reference": "bdbb06e767efe9abe3c00461662b4059a6cd0b55"
+                "reference": "393fec6c4cbdc1bd65570ac9d245704428010122"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/endroid/qr-code/zipball/bdbb06e767efe9abe3c00461662b4059a6cd0b55",
-                "reference": "bdbb06e767efe9abe3c00461662b4059a6cd0b55",
+                "url": "https://api.github.com/repos/endroid/qr-code/zipball/393fec6c4cbdc1bd65570ac9d245704428010122",
+                "reference": "393fec6c4cbdc1bd65570ac9d245704428010122",
                 "shasum": ""
             },
             "require": {
                 "bacon/bacon-qr-code": "^3.0",
-                "php": "^8.2"
+                "php": "^8.1"
             },
             "require-dev": {
                 "endroid/quality": "dev-main",
@@ -1636,7 +1636,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "6.x-dev"
+                    "dev-main": "5.x-dev"
                 }
             },
             "autoload": {
@@ -1665,7 +1665,7 @@
             ],
             "support": {
                 "issues": "https://github.com/endroid/qr-code/issues",
-                "source": "https://github.com/endroid/qr-code/tree/6.0.3"
+                "source": "https://github.com/endroid/qr-code/tree/5.1.0"
             },
             "funding": [
                 {
@@ -1673,7 +1673,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-29T19:28:52+00:00"
+            "time": "2024-09-08T08:52:55+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -2838,6 +2838,55 @@
             ],
             "support": {
                 "source": "https://github.com/scheb/2fa-bundle/tree/v7.6.0"
+            },
+            "time": "2024-10-20T10:14:58+00:00"
+        },
+        {
+            "name": "scheb/2fa-email",
+            "version": "v7.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/scheb/2fa-email.git",
+                "reference": "deebb0ce03e2137c24425084ca8bfe99afe8ded6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/scheb/2fa-email/zipball/deebb0ce03e2137c24425084ca8bfe99afe8ded6",
+                "reference": "deebb0ce03e2137c24425084ca8bfe99afe8ded6",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~8.2.0 || ~8.3.0 || ~8.4.0",
+                "scheb/2fa-bundle": "self.version"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Scheb\\TwoFactorBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Scheb",
+                    "email": "me@christianscheb.de"
+                }
+            ],
+            "description": "Extends scheb/2fa-bundle with two-factor authentication via email",
+            "homepage": "https://github.com/scheb/2fa",
+            "keywords": [
+                "2fa",
+                "Authentication",
+                "email",
+                "symfony",
+                "two-factor",
+                "two-step"
+            ],
+            "support": {
+                "source": "https://github.com/scheb/2fa-email/tree/v7.6.0"
             },
             "time": "2024-10-20T10:14:58+00:00"
         },

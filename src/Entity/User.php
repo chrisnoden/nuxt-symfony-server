@@ -10,14 +10,15 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use IlluminateAgnostic\Str\Support\Str;
 use Ramsey\Uuid\Doctrine\UuidV7Generator;
 use Ramsey\Uuid\UuidInterface;
-use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface;
+use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface as GoogleTwoFactorInterface;
+use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface as EmailTwoFactorInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'users')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface, EquatableInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, EmailTwoFactorInterface, GoogleTwoFactorInterface, EquatableInterface
 {
     use TimestampableEntity;
 
@@ -56,6 +57,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
 
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $googleAuthenticatorSecret = null;
+
+    #[ORM\Column(type: 'string', length: 12, nullable: true)]
+    private ?string $authCode = null;
 
     public function __toString(): string
     {
@@ -166,9 +170,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
         $this->plainPassword = null;
     }
 
+    public function isEmailAuthEnabled(): bool
+    {
+        return $this->twoFactorStatus === TwoFactorStatusType::MAGIC_LINK;
+    }
+
+    public function isTwoFactorEnabled(): bool
+    {
+        return $this->isGoogleAuthenticatorEnabled() || $this->isEmailAuthEnabled();
+    }
+
     public function isGoogleAuthenticatorEnabled(): bool
     {
         return null !== $this->googleAuthenticatorSecret && $this->twoFactorStatus === TwoFactorStatusType::GOOGLE_AUTHENTICATOR;
+    }
+
+    public function getTwoFactorStatus(): TwoFactorStatusType
+    {
+        return $this->twoFactorStatus;
     }
 
     public function setTwoFactorStatus(TwoFactorStatusType $twoFactorStatus): self
@@ -188,9 +207,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
         return $this->googleAuthenticatorSecret;
     }
 
-    public function setGoogleAuthenticatorSecret(?string $googleAuthenticatorSecret): void
+    public function setGoogleAuthenticatorSecret(?string $googleAuthenticatorSecret): self
     {
         $this->googleAuthenticatorSecret = $googleAuthenticatorSecret;
+
+        return $this;
     }
 
     public function asResponseArray(): array
@@ -216,5 +237,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
         }
 
         return true;
+    }
+
+    public function getEmailAuthRecipient(): string
+    {
+        return $this->email;
+    }
+
+    public function getEmailAuthCode(): string
+    {
+        if (null === $this->authCode) {
+            throw new \LogicException('The email authentication code was not set');
+        }
+
+        return $this->authCode;
+    }
+
+    public function setEmailAuthCode(?string $authCode): void
+    {
+        $this->authCode = $authCode;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Transformer;
 
+use App\Entity\TwoFactorStatusType;
 use App\Entity\User;
 use League\Fractal\TransformerAbstract;
 
@@ -21,7 +22,12 @@ class UserTransformer extends TransformerAbstract
             'roles'            => $entity->getRoles(),
             'active'           => null !== $entity->getPassword(),
             'enabled'          => $entity->isEnabled(),
-            'twoFactorEnabled' => $entity->isGoogleAuthenticatorEnabled(),
+            'twoFactorEnabled' => (
+                $entity->getTwoFactorStatus() !== TwoFactorStatusType::DISABLED
+                &&
+                $entity->getTwoFactorStatus() !== TwoFactorStatusType::PENDING
+            ),
+            'twoFactorMethod' => $entity->getTwoFactorStatus()->value,
         ];
     }
 }

@@ -33,7 +33,7 @@ final class Version20240820151414 extends AbstractMigration
         $this->addSql('COMMENT ON COLUMN user_reset_password_requests.requested_at IS \'(DC2Type:datetime_immutable)\'');
         $this->addSql('COMMENT ON COLUMN user_reset_password_requests.expires_at IS \'(DC2Type:datetime_immutable)\'');
 
-        $this->addSql('CREATE TABLE users (id UUID NOT NULL, client_id INT NOT NULL, name VARCHAR(100) NOT NULL, email VARCHAR(255) NOT NULL, roles JSONB NOT NULL, password VARCHAR(255) DEFAULT NULL, enabled BOOLEAN NOT NULL, two_factor_status VARCHAR(20) NOT NULL, google_authenticator_secret VARCHAR(255) DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE users (id UUID NOT NULL, client_id INT NOT NULL, name VARCHAR(100) NOT NULL, email VARCHAR(255) NOT NULL, roles JSONB NOT NULL, password VARCHAR(255) DEFAULT NULL, enabled BOOLEAN NOT NULL, two_factor_status VARCHAR(20) NOT NULL, google_authenticator_secret VARCHAR(255) DEFAULT NULL, auth_code VARCHAR(12) DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_1483A5E9E7927C74 ON users (email)');
         $this->addSql('CREATE INDEX IDX_1483A5E919EB6921 ON users (client_id)');
         $this->addSql('COMMENT ON COLUMN users.id IS \'(DC2Type:uuid)\'');

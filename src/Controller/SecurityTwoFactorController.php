@@ -46,13 +46,14 @@ class SecurityTwoFactorController extends AbstractController
             return $this->badRequest('invalid password');
         }
 
-        if (!$user->isGoogleAuthenticatorEnabled()) {
+        if (!$user->isTwoFactorEnabled()) {
             return $this->badRequest('two factor not enabled');
         }
 
         $user
             ->setTwoFactorStatus(TwoFactorStatusType::DISABLED)
             ->setGoogleAuthenticatorSecret(null)
+            ->setEmailAuthCode(null)
         ;
         $this->userRepository->save($user, true);
 
@@ -68,20 +69,20 @@ class SecurityTwoFactorController extends AbstractController
         EnableTwoFactorFormRequest $request,
         GoogleAuthenticatorInterface $authenticator,
     ): JsonResponse {
-        if ($user->isGoogleAuthenticatorEnabled()) {
+        if ($user->isTwoFactorEnabled()) {
             return $this->badRequest('two factor already enabled');
         }
 
-        if ($authenticator->checkCode($user, $request->get('authCode'))) {
-            $user
-                ->setTwoFactorStatus(TwoFactorStatusType::GOOGLE_AUTHENTICATOR)
-            ;
-            $this->userRepository->save($user, true);
+        $method = TwoFactorStatusType::tryFrom($request->get('method'));
 
-            return $this->okResponse();
+        if ($method === TwoFactorStatusType::GOOGLE_AUTHENTICATOR && !$authenticator->checkCode($user, $request->get('authCode'))) {
+            return $this->badRequest('invalid code');
         }
 
-        return $this->badRequest('invalid code');
+        $user->setTwoFactorStatus($method);
+        $this->userRepository->save($user, true);
+
+        return $this->okResponse();
     }
 
     #[Route(
