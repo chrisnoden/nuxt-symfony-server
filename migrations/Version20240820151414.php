@@ -19,7 +19,7 @@ final class Version20240820151414 extends AbstractMigration
         $this->addSql('CREATE SEQUENCE clients_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE user_reset_password_requests_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
 
-        $this->addSql('CREATE TABLE clients (id INT NOT NULL, company_name VARCHAR(100) NOT NULL, enabled BOOLEAN NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE clients (id INT NOT NULL DEFAULT nextval(\'clients_id_seq\'), company_name VARCHAR(100) NOT NULL, enabled BOOLEAN NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
 
         $this->addSql('CREATE TABLE user_confirm_email_requests (id UUID NOT NULL, user_id UUID NOT NULL, email VARCHAR(255) NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, expires_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_6F6FEE27E7927C74 ON user_confirm_email_requests (email)');
@@ -27,7 +27,7 @@ final class Version20240820151414 extends AbstractMigration
         $this->addSql('COMMENT ON COLUMN user_confirm_email_requests.id IS \'(DC2Type:uuid)\'');
         $this->addSql('COMMENT ON COLUMN user_confirm_email_requests.user_id IS \'(DC2Type:uuid)\'');
 
-        $this->addSql('CREATE TABLE user_reset_password_requests (id INT NOT NULL, user_id UUID NOT NULL, selector VARCHAR(20) NOT NULL, hashed_token VARCHAR(100) NOT NULL, requested_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, expires_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE user_reset_password_requests (id INT NOT NULL DEFAULT nextval(\'user_reset_password_requests_id_seq\'), user_id UUID NOT NULL, selector VARCHAR(20) NOT NULL, hashed_token VARCHAR(100) NOT NULL, requested_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, expires_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_AFB5C210A76ED395 ON user_reset_password_requests (user_id)');
         $this->addSql('COMMENT ON COLUMN user_reset_password_requests.user_id IS \'(DC2Type:uuid)\'');
         $this->addSql('COMMENT ON COLUMN user_reset_password_requests.requested_at IS \'(DC2Type:datetime_immutable)\'');
