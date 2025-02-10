@@ -2,7 +2,7 @@
 
 This repo is part of a client/server project. The client (front-end) is served using
 [Nuxt v3](https://nuxt.com) and the server (back-end) serves RESTful JSON API
-using [Symfony 7.1](https://symfony.com) built on [PHP 8.3](https://php.net)
+using [Symfony 7.2](https://symfony.com) built on [PHP 8.3](https://php.net)
 
 - [Front-End Client Repository](https://github.com/chrisnoden/nuxt-symfony-client)
 - [Back-End Server Repository](https://github.com/chrisnoden/nuxt-symfony-server)
