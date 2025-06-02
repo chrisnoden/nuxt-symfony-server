@@ -162,12 +162,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, EmailTw
         return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
+    #[\Deprecated]
     public function eraseCredentials(): void
     {
-        $this->plainPassword = null;
+
     }
 
     public function isEmailAuthEnabled(): bool
